@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boutique — Thème sombre</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="exo2.css" />
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <div class="bg-layer">
+    <div class="bg-image"></div>
+    <div class="bg-glow"></div>
+    <div class="bg-brand">BOUTIQUE</div>
+  </div>
+
+  <!-- Écran de chargement -->
+  <div id="loading-screen" aria-hidden="true">
+    <div class="loading-content">
+      <span class="loading-logo">COFFEE MTS</span>
+      <span class="loading-subtitle">Chargement de la boutique...</span>
+      <div class="loading-progress" role="progressbar" aria-label="Chargement" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="loading-progress-bar" id="loading-progress-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <header class="header">
+    <button type="button" class="btn-back" aria-label="Retour">← Retour</button>
+    <h1 class="logo">COFFEE MTS</h1>
+    <div class="header-actions">
+      <button type="button" class="btn-icon" aria-label="Menu">⋮</button>
+    </div>
+  </header>
+
+  <main class="main">
+    <!-- ACCUEIL -->
+    <section id="accueil" class="panel active">
+      <div class="welcome-card">
+        <span class="welcome-emoji">👋</span>
+        <div>
+          <p class="welcome-title">Bienvenue</p>
+          <p class="welcome-sub">Découvrez nos produits</p>
+        </div>
+      </div>
+
+      <div class="products-toolbar">
+        <h2 class="section-title">Produits</h2>
+        <span class="products-count"><span id="product-count">0</span> produits</span>
+      </div>
+      <div class="filters-row">
+        <div class="filter-group">
+          <button type="button" class="filter-btn" id="btn-categories" aria-haspopup="listbox" aria-expanded="false">
+            Catégories <span class="chevron">▼</span>
+          </button>
+          <div class="dropdown" id="dropdown-categories" role="listbox" hidden>
+            <button type="button" role="option" data-filter="all">Toutes</button>
+            <button type="button" role="option" data-filter="cat1">Catégorie 1</button>
+            <button type="button" role="option" data-filter="cat2">Catégorie 2</button>
+            <button type="button" role="option" data-filter="cat3">Catégorie 3</button>
+          </div>
+        </div>
+        <div class="filter-group">
+          <button type="button" class="filter-btn" id="btn-marques" aria-haspopup="listbox" aria-expanded="false">
+            Farm <span class="chevron">▼</span>
+          </button>
+          <div class="dropdown" id="dropdown-marques" role="listbox" hidden>
+            <button type="button" role="option" data-filter="all">Toutes</button>
+            <button type="button" role="option" data-filter="marque-a">Marque A</button>
+            <button type="button" role="option" data-filter="marque-b">Marque B</button>
+          </div>
+        </div>
+      </div>
+      <div class="search-wrap">
+        <input type="search" id="search-products" class="search-input" placeholder="Rechercher un produit..." autocomplete="off" />
+        <span class="search-icon" aria-hidden="true">🔍</span>
+      </div>
+      <div class="products-grid" id="products-grid">
+        <!-- Produits injectés par JS ou placeholder -->
+        <article class="product-card" data-id="1" data-category="cat1" data-marque="marque-a">
+          <div class="product-image-wrap">
+            <div class="product-image placeholder">Produit 1</div>
+            <span class="product-badge">★</span>
+          </div>
+          <div class="product-info">
+            <span class="product-tag">Nouveau</span>
+            <h3 class="product-name">Jaune Mousseux </h3>
+            <p class="product-origin">maroc</p>
+            <button type="button" class="btn-add-cart" data-id="1">Ajouter au panier</button>
+          </div>
+        </article>
+        <article class="product-card" data-id="2" data-category="cat2" data-marque="marque-b">
+          <div class="product-image-wrap">
+            <div class="product-image placeholder">Produit 2</div>
+            <span class="product-badge">★</span>
+          </div>
+          <div class="product-info">
+            <span class="product-tag">Populaire</span>
+            <h3 class="product-name">2× Filtre</h3>
+            <p class="product-origin">Espagne</p>
+            <button type="button" class="btn-add-cart" data-id="2">Ajouter au panier</button>
+          </div>
+        </article>
+        <article class="product-card" data-id="3" data-category="cat1" data-marque="marque-a">
+          <div class="product-image-wrap">
+            <div class="product-image placeholder">produit 3</div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Coco Acai </h3>
+            <p class="product-origin">Guadeloupe</p>
+            <button type="button" class="btn-add-cart" data-id="3">Ajouter au panier</button>
+          </div>
+        </article>
+        <article class="product-card" data-id="4" data-category="cat3" data-marque="marque-b">
+          <div class="product-image-wrap">
+            <div class="product-image placeholder">Produit 4</div>
+            <span class="product-badge">★</span>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">3× Filtre</h3>
+            <p class="product-origin">Espagne</p>
+            <button type="button" class="btn-add-cart" data-id="4">Ajouter au panier</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- DÉTAIL PRODUIT -->
+    <section id="detail-produit" class="panel">
+      <button type="button" class="btn-back detail-back" id="btn-back-to-accueil">← Retour</button>
+
+      <div class="detail-hero">
+        <div class="detail-main-media">
+          <div class="detail-media-inner" id="detail-main-media">
+            <!-- image/vidéo principale injectée par JS -->
+          </div>
+          <div class="detail-media-nav">
+            <button type="button" class="detail-media-arrow" id="detail-prev-media" aria-label="Média précédent">‹</button>
+            <button type="button" class="detail-media-arrow" id="detail-next-media" aria-label="Média suivant">›</button>
+          </div>
+        </div>
+        <div class="detail-thumbs" id="detail-thumbs">
+          <!-- vignettes (3 emplacements) injectées par JS -->
+        </div>
+      </div>
+
+      <div class="detail-body">
+        <h2 class="detail-title" id="detail-title">Nom du produit</h2>
+        <p class="detail-origin" id="detail-origin">Origine</p>
+        <div class="detail-tags" id="detail-tags">
+          <!-- tags injectés -->
+        </div>
+        <p class="detail-description" id="detail-description">
+          Description détaillée du produit.
+        </p>
+
+        <div class="detail-section">
+          <h3 class="detail-section-title">Sélectionner la quantité</h3>
+          <div class="detail-quantities" id="detail-quantities">
+            <!-- cartes de quantités injectées par JS -->
+          </div>
+        </div>
+
+        <button type="button" class="btn-primary detail-add-btn" id="detail-add-to-cart">
+          🛒 Ajouter au panier
+        </button>
+      </div>
+    </section>
+
+    <!-- AVIS -->
+    <section id="avis" class="panel">
+      <h2 class="page-title">Avis clients</h2>
+      <p class="page-subtitle">Ce que nos clients pensent de nous</p>
+      <div class="rating-summary">
+        <span class="rating-value" id="avg-rating">0</span>
+        <div class="stars-display" id="stars-summary" aria-label="Note moyenne"></div>
+        <span class="reviews-count" id="reviews-count">0 avis</span>
+      </div>
+      <div class="rating-bars" id="rating-bars"></div>
+      <div class="write-review">
+        <h3>Donner votre avis</h3>
+        <div class="star-rating-input" id="star-input" role="group" aria-label="Note de 1 à 5 étoiles">
+          <button type="button" class="star-btn" data-value="1" aria-label="1 étoile">★</button>
+          <button type="button" class="star-btn" data-value="2" aria-label="2 étoiles">★</button>
+          <button type="button" class="star-btn" data-value="3" aria-label="3 étoiles">★</button>
+          <button type="button" class="star-btn" data-value="4" aria-label="4 étoiles">★</button>
+          <button type="button" class="star-btn" data-value="5" aria-label="5 étoiles">★</button>
+        </div>
+        <textarea id="review-text" class="review-textarea" placeholder="Votre avis..." rows="3"></textarea>
+        <button type="button" class="btn-submit-review" id="submit-review">Publier l'avis</button>
+      </div>
+      <div class="reviews-list" id="reviews-list"></div>
+    </section>
+
+    <!-- PANIER -->
+    <section id="panier" class="panel">
+      <h2 class="page-title">Mon panier</h2>
+      <div class="cart-content" id="cart-content">
+        <div class="cart-empty" id="cart-empty">
+          <div class="cart-empty-icon">🛒</div>
+          <p>Votre panier est vide</p>
+          <p class="cart-empty-hint">Ajoutez des produits pour commencer vos achats</p>
+          <button type="button" class="btn-primary" id="btn-discover-products">Découvrir les produits</button>
+        </div>
+        <div class="cart-items-wrap" id="cart-items-wrap" hidden>
+          <ul class="cart-items" id="cart-items"></ul>
+          <div class="cart-total">
+            <span>Total</span>
+            <strong id="cart-total-price">0 €</strong>
+          </div>
+          <button type="button" class="btn-primary btn-checkout" id="btn-checkout">Finaliser la commande</button>
+        </div>
+      </div>
+      <div class="checkout-form-wrap" id="checkout-form-wrap" hidden>
+        <h3>Finaliser la commande</h3>
+        <form id="checkout-form" class="checkout-form">
+          <label>
+            <span>Nom complet</span>
+            <input type="text" name="name" required placeholder="Jean Dupont" />
+          </label>
+          <label>
+            <span>Email</span>
+            <input type="email" name="email" required placeholder="jean@exemple.fr" />
+          </label>
+          <label>
+            <span>Téléphone</span>
+            <input type="tel" name="phone" placeholder="06 12 34 56 78" />
+          </label>
+          <label>
+            <span>Adresse de livraison</span>
+            <textarea name="address" rows="2" required placeholder="Adresse complète"></textarea>
+          </label>
+          <label>
+            <span>Code postal</span>
+            <input type="text" name="zip" required placeholder="69001" />
+          </label>
+          <label>
+            <span>Ville</span>
+            <input type="text" name="city" required placeholder="Lyon" />
+          </label>
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" id="btn-cancel-checkout">Annuler</button>
+            <button type="submit" class="btn-primary">Confirmer la commande</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- INFOS -->
+    <section id="infos" class="panel">
+      <h2 class="page-title">Infos</h2>
+      <p class="page-subtitle">Adresse, sur place & SAV</p>
+      <div class="info-cards">
+        <div class="info-card">
+          <div class="info-card-header">
+            <span class="info-icon">📍</span>
+            <h3>Sur place</h3>
+          </div>
+          <p><strong>Adresse</strong></p>
+          <p>111 avenue Alexander Fleming,69300 Caluire et cuire</p>
+          <p class="info-hours"><span class="info-icon small">🕐</span> Horaires : 12h – 00h</p>
+          <span class="info-badge">Disponible</span>
+        </div>
+        <div class="info-card">
+          <div class="info-card-header">
+            <span class="info-icon">🚚</span>
+            <h3>Livraison</h3>
+          </div>
+          <p>Tournées et frais selon secteur. Minimum 50€.</p>
+        </div>
+        <div class="info-card highlight">
+          <div class="info-card-header">
+            <span class="info-icon">💬</span>
+            <h3>Prise de commande, SAV, Infos</h3>
+          </div>
+          <p>24h/24</p>
+          <a href="https://t.me/personne692" class="btn-telegram" target="_blank" rel="noopener">✈ @personne692</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="panel">
+      <h2 class="page-title">Nous contacter</h2>
+      <p class="page-subtitle">Choisissez votre plateforme préférée</p>
+      <div class="contact-cards">
+        <a href="#" class="contact-card is-disabled" data-disabled="true" aria-disabled="true">
+          <span class="contact-icon">📷</span>
+          <div class="contact-text">
+            <strong>Instagram</strong>
+            <span>Suivez-nous sur Instagram</span>
+          </div>
+          <span class="contact-arrow">↗</span>
+        </a>
+        <a href="#" class="contact-card is-disabled" data-disabled="true" aria-disabled="true">
+          <span class="contact-icon">👻</span>
+          <div class="contact-text">
+            <strong>Snapchat</strong>
+            <span>Ajoutez-nous sur Snapchat</span>
+          </div>
+          <span class="contact-arrow">↗</span>
+        </a>
+        <a href="#" class="contact-card is-disabled" data-disabled="true" aria-disabled="true">
+          <span class="contact-icon">𝕏</span>
+          <div class="contact-text">
+            <strong>X (Twitter)</strong>
+            <span>Suivez-nous sur X</span>
+          </div>
+          <span class="contact-arrow">↗</span>
+        </a>
+        <a href="#" class="contact-card is-disabled" data-disabled="true" aria-disabled="true">
+          <span class="contact-icon">♪</span>
+          <div class="contact-text">
+            <strong>TikTok</strong>
+            <span>Suivez-nous sur TikTok</span>
+          </div>
+          <span class="contact-arrow">↗</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" role="navigation" aria-label="Navigation principale">
+    <button type="button" class="nav-item active" data-panel="accueil" aria-current="page">
+      <span class="nav-icon">🏠</span>
+      <span>Accueil</span>
+    </button>
+    <button type="button" class="nav-item" data-panel="avis">
+      <span class="nav-icon">★</span>
+      <span>Avis</span>
+    </button>
+    <button type="button" class="nav-item" data-panel="panier">
+      <span class="nav-icon">🛒</span>
+      <span>Panier</span>
+      <span class="nav-badge" id="cart-badge" hidden>0</span>
+    </button>
+    <button type="button" class="nav-item" data-panel="infos">
+      <span class="nav-icon">ℹ</span>
+      <span>Infos</span>
+    </button>
+    <button type="button" class="nav-item" data-panel="contact">
+      <span class="nav-icon">✉</span>
+      <span>Contact</span>
+    </button>
+  </nav>
+
+  <script src="exo3.js"></script>
+</body>
+</html>
