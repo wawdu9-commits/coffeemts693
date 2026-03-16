@@ -2,11 +2,17 @@
   'use strict';
 
   // Intégration Telegram WebApp (si disponible)
-  if (window.Telegram && window.Telegram.WebApp) {
-    const tg = window.Telegram.WebApp;
-    tg.expand(); // ouverture en plein écran dans Telegram
-    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-      console.log('Bonjour, ' + tg.initDataUnsafe.user.first_name + ' 👋');
+  var tg = (window.Telegram && window.Telegram.WebApp) ? window.Telegram.WebApp : null;
+  if (tg) {
+    try {
+      tg.ready();
+      tg.expand(); // ouverture en plein écran dans Telegram
+      if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+        console.log('Bonjour, ' + tg.initDataUnsafe.user.first_name);
+      }
+    } catch (e) {
+      console.log('Telegram WebApp init error:', e);
+      tg = null;
     }
   }
 
@@ -402,16 +408,21 @@
     obj.total = cart.reduce(function (s, p) { return s + (p.price || 0) * (p.qty || 1); }, 0);
 
     // Envoi des infos au bot Telegram (le bot pourra ensuite poster dans un canal)
-    if (window.Telegram && window.Telegram.WebApp) {
+    if (tg) {
       try {
-        window.Telegram.WebApp.sendData(JSON.stringify(obj));
+        tg.sendData(JSON.stringify(obj));
+        // Important: ferme la mini-app, ce qui "retourne" les données au bot
+        setTimeout(function () { tg.close(); }, 150);
       } catch (err) {
         console.log('Telegram sendData error:', err);
+        alert("Erreur Telegram lors de l'envoi. Ouvre la console et renvoie-moi le message d'erreur.");
       }
+    } else {
+      alert("Telegram WebApp non détecté. Ouvre le site via le bouton Menu du bot.");
     }
 
     console.log('Commande:', obj);
-    alert('Commande enregistrée (démo). En production, envoi au serveur.');
+    alert('Commande enregistrée (démo).');
     checkoutFormWrap.hidden = true;
     form.reset();
   });
